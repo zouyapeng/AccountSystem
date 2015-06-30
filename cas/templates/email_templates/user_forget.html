@@ -1,0 +1,66 @@
+<html style="height: 100%">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body style="height: 100%">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#eeeeee" align="center"
+       style="border-collapse:separate; height: 100%">
+    <tr>
+        <td width="100%" bgcolor="#eeeeee"
+            style="padding-top:0;padding-right:0;padding-bottom:80px;padding-left:0;margin:0">
+            <table width="600" cellspacing="0" cellpadding="15" border="0" align="center"
+                   style="border-top-left-radius:10px;border-top-right-radius:10px">
+                <tr>
+                    <td width="100%"
+                        style="background-color:#3d4b67;border-top-left-radius:10px;border-top-right-radius:10px">
+                        <table cellspacing="0" cellpadding="0" border="0" align="center" style="width:100%">
+                            <tbody>
+                            <tr>
+                                <td align="left"
+                                    style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0;margin:0">
+                                    <span style="display:block;font-family:'微软雅黑';font-size:18px;color:#ffffff;"> CAS 找回密码</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table width="600" cellspacing="0" cellpadding="15" border="0" align="center"
+                   style="border:1px solid #cccccc;border-bottom-left-radius:10px;border-bottom-right-radius:10px">
+                <tbody>
+                <tr>
+                    <td bgcolor="#ffffff" align="left" style="padding-top:30px;margin:0">
+                        <span style="color:#3d4b67;font-weight:normal;font-size:16px; font-family:'微软雅黑';">您好 {{ user.username }}，</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffffff" align="left">
+                        您在 CAS 提交了找回密码申请。<br>
+                        如果您没有提交修改密码的申请, 请忽略本邮件
+                        <hr/>
+                        请点击链接继续:
+                        <a href="{{ domain }}{% url 'account:forget' token %}">{{ domain }}{% url 'account:forget' token %}</a>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td bgcolor="#ffffff" align="center">
+                        <table cellspacing="0" cellpadding="0" border="0" align="center" style="width:100%">
+                            <tbody>
+                            <tr>
+                                <td height="1" align="center"
+                                    style="background:#efefef;padding:0;margin:0"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

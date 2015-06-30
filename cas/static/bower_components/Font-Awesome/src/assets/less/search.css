@@ -1,0 +1,26 @@
+.filter-parent {
+  position: relative;
+  font-size: 18px;
+  padding-top: 40px;
+  margin: -20px auto 50px;
+}
+.filter-parent label {
+  position: absolute;
+  left: 17px;
+  top: 50px;
+}
+.filter-parent #filter-by,
+.filter-parent .hint {
+  padding-left: 43px;
+  padding-right: 43px;
+  border-radius: 23px;
+}
+.filter-parent .hint {
+  color: #aaa;
+}
+.filter-parent #filter-clear {
+  text-decoration: none;
+  position: absolute;
+  right: 18px;
+  top: 53px;
+}

@@ -1,0 +1,39 @@
+{% extends "account/setting_security_layout.html" %}
+
+{% block tag-content %}
+    <div class="tab-content clearfix">
+        {% if success %}
+            <div class="alert alert-warning" role="alert">密码修改成功</div>
+        {% endif %}
+        <div class="row">
+            <form method="POST" id="securityForm" class="form-horizontal col-xs-9 col-xs-offset-1">
+                <div class="form-group">
+                    <label class="control-label col-xs-4" for="id_old_password"><i class="required">*</i> 原登录密码:</label>
+                    <div class="col-xs-8">
+                        <input class="form-control input-sm" id="id_old_password" name="old_password" type="password">
+                    </div>
+                </div>
+
+                 <div class="form-group ">
+                    <label class="control-label col-xs-4" for="id_new_password"><i class="required">*</i> 新登录密码:</label>
+                    <div class="col-xs-8">
+                        <input class=" form-control input-sm" id="id_new_password" name="new_password" type="password" />
+                    </div>
+                 </div>
+
+                <div class="form-group ">
+                    <label class="control-label col-xs-4" for="id_new_password1"><i class="required">*</i> 确认新登录密码:</label>
+                    <div class="col-xs-8">
+                    <input class=" form-control input-sm" id="id_new_password1" name="new_password1" type="password" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-8 col-xs-offset-4">
+                    <button class="btn btn-primary btn-sm"  type="submit" data-loading-text="提交中..."  >修改</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

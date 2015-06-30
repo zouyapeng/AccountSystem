@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{% load usertags %}
+
+{% load i18n %}
+{% load url from future %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">{{ application.name }}</h1>
+            <ul class="pull-right breadcrumb">
+                <li>
+                    <a href="{% url "home:home" %}">主页</a>
+                </li>
+                <li>
+                    <a href="{% url "oauth2:list" %}">应用管理</a>
+                </li>
+                <li class="active">{{ application.name }}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container ">
+        <div class="block clearfix">
+            <div class="form-horizontal col-xs-5 col-xs-offset-1">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">应用名词:</label>
+                    <div class="col-xs-9">
+                        <p class="form-control-static">{{ application.name }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">{% trans "Client id" %}:<br>
+{#                        <a id="copy_client_id" href="javascript:;">复制</a>#}
+                    </label>
+                    <div class="col-xs-9">
+                        <div class="form-control-static well well-sm" style="word-break:break-all;">{{ application.client_id }}</div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">{% trans "Client secret" %}:<br>
+{#                        <a id="client_secret_id" href="javascript:;">复制</a>#}
+                    </label>
+                    <div class="col-xs-9">
+                        <div class="form-control-static well well-sm" style="word-break:break-all;">{{ application.client_secret }}</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">回调地址:</label>
+                    <div class="col-xs-9">
+                        <pre class="form-control-static">{{ application.redirect_uris }}</pre>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">状态:</label>
+                    <div class="col-xs-9">
+                        <p class="form-control-static">{{ application.get_status_display }}</p>
+                    </div>
+                </div>
+
+                {% ifequal application.status 3 %}
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">驳回原因:</label>
+                        <div class="col-xs-9">
+                            <p class="form-control-static">{{ application.rejection_reason }}</p>
+                        </div>
+                    </div>
+                {% endifequal %}
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">创建时间:</label>
+                    <div class="col-xs-9">
+                        <p class="form-control-static">{{ application.created|user_tz:user }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">应用简介:</label>
+                    <div class="col-xs-9">
+                        <p class="form-control-static">{{ application.comm }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-9 col-xs-offset-3">
+                        <a class="btn btn-link btn-sm" href="{% url "oauth2:list" %}">返回</a>
+                        <a class="btn btn-primary btn-sm" href="{% url "oauth2:update" application.id %}">编辑</a>
+                        {% ifnotequal application.status 4 %}
+                        <a class="btn btn-danger btn-sm" href="{% url "oauth2:delete" application.id %}">删除</a>
+                        {% endifnotequal %}
+                        {% if is_examine %}
+                            <form action="{% url "oauth2:examine" application.id %}" onsubmit="return window.confirm('是否提交审核');" style="display: inline" method="POST">
+                            {% csrf_token %}
+                                <button class="btn btn-warning btn-sm" data-loading-text="提交中..." type="submit" >提交审核</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                {% if application.icon %}
+                <img class="appIcon" src="{{ MEDIA_URL }}{{ application.icon }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

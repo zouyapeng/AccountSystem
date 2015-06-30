@@ -1,0 +1,23 @@
+{% extends "account/setting_layout.html" %}
+{% load usertags %}
+
+{% block right-content %}
+
+    <div class="tab-content clearfix">
+
+        <div class="row">
+            <form method="POST" id="certificateForm" class="form-horizontal col-xs-4">
+                <div class="input-group input-group-sm ">
+                  <input value="{{ profile.certificate_password|default:"" }}" placeholder="密码" class="form-control" id="id_password" name="password" type="password">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">证书下载</button>
+                  </span>
+                </div><!-- /input-group -->
+            </form>
+
+            <iframe class="hide" data-src="{% url "account:certificate_download" resource_name="user" api_name='v1' %}" id="certificateDownloadIframe"></iframe>
+        </div>
+    </div>
+{% endblock %}
+
+

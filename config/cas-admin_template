@@ -1,0 +1,86 @@
+#!__PYTHON_BIN__/python
+from optparse import make_option, OptionParser
+import os
+import subprocess
+
+import django
+import sys
+
+
+uwsgi_file = "__UWSGI__"
+pid_file = "__PID__"
+
+
+class ManagementUtility(object):
+    def __init__(self):
+        self.argv = sys.argv[:]
+        self.prog_name = os.path.basename(self.argv[0])
+        self.parser = OptionParser()
+
+
+    def execute(self):
+        subcommand = 'help'
+
+        self.parser.add_option("-r", "--reload", action="store_true",
+                               dest="reload",
+                               default=False,
+                               help="uwsgi reload")
+        self.parser.add_option("-i", "--init", action="store_true",
+                               dest="init",
+                               default=False,
+                               help="uwsgi init")
+        self.parser.add_option("-s", "--stop", action="store_true",
+                               dest="stop",
+                               default=False,
+                               help="uwsgi stop")
+        (options, args) = self.parser.parse_args()
+        if options.reload:
+            subcommand = "reload"
+        elif options.init:
+            subcommand = "init"
+        elif options.stop:
+            subcommand = "stop"
+
+        if subcommand == 'help':
+            self.parser.print_help()
+        else:
+            getattr(self, subcommand)()
+
+    def reload(self):
+        if not os.path.exists(pid_file):
+            self.parser.error("open(\"%s\"): No such file or directory" % pid_file)
+
+        proc = subprocess.Popen(
+            ["sudo", "-u", "www-data", "__PYTHON_BIN__/uwsgi", "--reload", pid_file], stderr=subprocess.STDOUT, stdin=None,
+            stdout=subprocess.PIPE)
+        l = proc.stdout.readlines()
+        if len(l):
+            self.parser.error(l[0])
+        self.parser.exit(msg="Reload Success\n")
+
+    def stop(self):
+        if not os.path.exists(pid_file):
+            self.parser.error("open(\"%s\"): No such file or directory" % pid_file)
+        proc = subprocess.Popen(
+            ["sudo", "-u", "www-data", "__PYTHON_BIN__/uwsgi", "--stop", pid_file],
+            stderr=subprocess.STDOUT, stdin=None, stdout=subprocess.PIPE)
+        l = proc.stdout.readlines()
+        if len(l):
+            self.parser.error(l[0])
+        try:
+            proc = subprocess.Popen(["sudo", "-u", "www-data", "rm", pid_file], stderr=subprocess.STDOUT, stdin=None,
+                                    stdout=subprocess.PIPE)
+        except:
+            pass
+        self.parser.exit(msg="Stop Success\n")
+
+    def init(self):
+        proc = subprocess.Popen(
+            ["sudo", "-u", "www-data", "__PYTHON_BIN__/uwsgi", "--ini", uwsgi_file],
+            stderr=subprocess.STDOUT, stdin=None, stdout=subprocess.PIPE)
+        self.parser.exit(msg="%s\n" % proc.stdout.readlines()[0])
+
+
+if __name__ == "__main__":
+    utility = ManagementUtility()
+    utility.execute()

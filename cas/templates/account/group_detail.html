@@ -1,0 +1,22 @@
+{% extends "account/setting_layout.html" %}
+{% load usertags %}
+{% block right-content %}
+    <dl class="dl-horizontal">
+      <dt>名称:</dt>
+      <dd>{{ group.name }}</dd>
+      <dt>描述:</dt>
+      <dd>{{ group.groupprofile.describe }}</dd>
+      <dt>创建者:</dt>
+      <dd>{{ group.groupprofile.founder }}</dd>
+      <dt>已验证成员:</dt>
+      <dd>{{ is_active_count }} <a href="{% url "account:group_user" group.name %}">(浏览成员列表)</a></dd>
+      <dt>管理员:</dt>
+      <dd>
+        {% for u in administrators %}
+            {{ u.user }}<br>
+        {% endfor %}
+      </dd>
+      <dt>创建时间:</dt>
+      <dd>{{ group.groupprofile.creation|user_tz:request.user }} </dd>
+    </dl>
+{% endblock %}

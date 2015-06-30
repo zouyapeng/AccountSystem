@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% load usertags %}
+
+{% load i18n %}
+{% load url from future %}
+{% block content %}
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">删除{{ application.name }}</h1>
+            <ul class="pull-right breadcrumb">
+                <li>
+                    <a href="{% url "home:home" %}">主页</a>
+                </li>
+                <li>
+                    <a href="{% url "oauth2:list" %}">应用管理</a>
+                </li>
+                <li class="active">删除{{ application.name }}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="block">
+
+    <div class="block-center">
+        <h3 class="block-center-heading">{% trans "Are you sure to delete the application" %} {{ application.name }}?</h3>
+        <form method="post" action="{% url 'oauth2:delete' application.pk %}">
+            {% csrf_token %}
+            <div class="control-group">
+                <div class="controls">
+                    <a class="btn btn-large" href="{{ application.get_absolute_url }}">{% trans "Cancel" %}</a>
+                    <input type="submit" class="btn btn-large btn-danger" name="allow" value="{% trans "Delete" %}"/>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+{% endblock content %}

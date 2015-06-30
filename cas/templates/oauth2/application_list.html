@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% load usertags %}
+{% load pagination_tags %}
+{% block title %}应用管理{% endblock %}
+{% block content %}
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">应用管理</h1>
+            <ul class="pull-right breadcrumb">
+                <li>
+                    <a href="/">主页</a>
+                </li>
+                <li class="active">应用管理
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        {% has_perm "oauth2.add_application" as add_application %}
+        <div class="block">
+            <div class="block-title margin-bottom-10">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form>
+                            <div class="input-group">
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">搜索</button>
+                              </span>
+                                <input type="text" value="{{ request.GET.q }}" name="q" class="form-control" placeholder="应用名称">
+                            </div>
+                        </form>
+                        <!-- /input-group -->
+                    </div>
+                    <!-- /.col-lg-6 -->
+                    {% if user|perm_may_create_application %}
+                    <div class="col-lg-6 text-right">
+                        <a class="btn btn-primary" href="{% url "oauth2:register" %}">创建应用</a>
+                    </div>
+                    {% endif %}
+                    <!-- /.col-lg-6 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <div class="block-content">
+                <table class="table">
+                    <tr>
+                        <th>名称</th>
+                        <th class="col-xs-3">状态</th>
+                        <th class="col-xs-3">创建时间</th>
+                        <th class="col-xs-2">操作</th>
+                    </tr>
+                {% for application in applications %}
+                    <tr>
+                        <td>{{ application.name }}</td>
+                        <td>
+                            {{ application.get_status_display }}
+                            {% ifequal application.status 3 %}<i class="glyphicon glyphicon-warning-sign"
+                                                                 data-trigger="hover"
+                                                                 data-container="body" data-toggle="popover" data-placement="top" data-content="{{ application.rejection_reason }}"></i>{% endifequal %}
+                        </td>
+                        <td>{{ application.created|user_tz:user }}</td>
+                        <td><a href="{{ application.get_absolute_url }}">操作</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

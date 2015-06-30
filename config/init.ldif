@@ -1,0 +1,23 @@
+dn: ou=People,dc=ldap,dc=com
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Groups,dc=ldap,dc=com
+objectClass: organizationalUnit
+ou: Groups
+
+dn: uid=casadmin,ou=People,dc=ldap,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: casadmin
+sn: casadmin
+givenName: casadmin
+cn:User
+displayName: casadmin
+uidNumber: 1
+gidNumber: 1
+userPassword: 123456
+gecos: casadmin
+loginShell: /bin/bash
+homeDirectory: /home/cas/

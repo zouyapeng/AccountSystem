@@ -1,0 +1,94 @@
+<html style="height: 100%">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body style="height: 100%">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#eeeeee" align="center"
+       style="border-collapse:separate;height: 100%">
+    <tr>
+        <td width="100%" bgcolor="#eeeeee"
+            style="padding-top:0;padding-right:0;padding-bottom:80px;padding-left:0;margin:0">
+            <table width="600" cellspacing="0" cellpadding="15" border="0" align="center"
+                   style="border-top-left-radius:10px;border-top-right-radius:10px">
+                <tr>
+                    <td width="100%"
+                        style="background-color:#3d4b67;border-top-left-radius:10px;border-top-right-radius:10px">
+                        <table cellspacing="0" cellpadding="0" border="0" align="center" style="width:100%">
+                            <tbody>
+                            <tr>
+                                <td align="left"
+                                    style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0;margin:0">
+                                    <span style="display:block;font-family:'微软雅黑';font-size:18px;color:#ffffff;">CAS邮箱地址确认</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+                        <table width="600" cellspacing="0" cellpadding="15" border="0" align="center"
+                               style="border:1px solid #cccccc;border-bottom-left-radius:10px;border-bottom-right-radius:10px">
+                            <tbody>
+                            <tr>
+                                <td bgcolor="#ffffff" align="left" style="padding-top:30px;margin:0">
+                                    <span style="color:#3d4b67;font-weight:normal;font-size:16px; font-family:'微软雅黑';">您好 {{ user.username }}，</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#ffffff" align="left">
+                                    <span style="color:#262626;font-weight:normal;font-size:14px;font-family:Arial,Helvetica,sans-serif;line-height:22px">
+                                    您的 CAS 帐户“<strong>{{ user.username }}</strong>”已成功创建。 <br>
+                                    现在，点击下面的按钮确认您的邮箱地址。确认之后您可以通过邮箱找回密码！
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" bgcolor="#ffffff" align="center"
+                                    style="border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px">
+                                    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center"
+                                           style="border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px">
+                                        <tbody>
+                                        <tr>
+                                            <td align="center">
+                                                <table width="62%" cellspacing="0" cellpadding="0" border="0"
+                                                       bgcolor="#00a0d9" align="center"
+                                                       style="border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td height="66" align="center"
+                                                            style="padding:0;border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-color:transparent;border-color:rgba(0,0,0,0.1);border-style:solid;border-top-width:1px;border-right-width:1px;border-bottom-width:1px;border-left-width:1px;text-align:center;background:#3d4b67;background:-moz-linear-gradient(top,#3d4b67 0%,#3d4b67 100%);background:-o-linear-gradient(top,#3d4b67 0%,#00a0d9 100%)">
+                                                            <a target="_blank"
+                                                               style="min-height:66px;line-height:66px;color:#ffffff;font-size:22px;font-family:'微软雅黑';text-decoration:none"
+                                                               href="{{ domain }}{% url 'account:active' token %}">验证您的账号
+                                                                &gt;</a>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <i style="font-size: 12px; color: #696562">(如果以上链接无效，请将({{ domain }}{% url 'account:active' token %})复制到您的浏览器地址栏)</i>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#ffffff" align="center">
+                                    <table cellspacing="0" cellpadding="0" border="0" align="center" style="width:100%">
+                                        <tbody>
+                                        <tr>
+                                            <td height="1" align="center"
+                                                style="background:#efefef;padding:0;margin:0"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

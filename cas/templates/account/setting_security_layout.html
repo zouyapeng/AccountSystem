@@ -1,0 +1,18 @@
+{% extends "account/setting_layout.html" %}
+
+{% block right-content %}
+<ul class="nav nav-tabs nav-justified margin-bottom-20 tab-v1">
+    <li {% ifequal tab "pwd" %} class="active" {% endifequal %}>
+        <a href="{% url "account:security" "pwd" %}">修改登录密码</a>
+    </li>
+    <li {% ifequal tab "qa" %} class="active" {% endifequal %}>
+        <a href="{% url "account:security" "qa" %}">修改安全问题</a>
+    </li>
+    <li {% ifequal tab "email" %} class="active" {% endifequal %}>
+        <a href="{% url "account:security" "email" %}">修改安全邮箱</a>
+    </li>
+</ul>
+
+{% block tag-content %}
+{% endblock %}
+{% endblock %}

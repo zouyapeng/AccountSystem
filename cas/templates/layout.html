@@ -1,0 +1,68 @@
+{% load compress %}
+{% load usertags %}<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{% block title %}CAS{% endblock %}</title>
+    {% compress css file %}
+        {% block css %}
+            {{ block.super }}
+            <link href="{{ STATIC_URL }}bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link href="{{ STATIC_URL }}bower_components/Font-Awesome/css/font-awesome.css" rel="stylesheet">
+            <link href="{{ STATIC_URL }}css/default.css" rel="stylesheet">
+        {% endblock %}
+    {% endcompress %}
+
+</head>
+<body>
+<header id="header" class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">CAS</a>
+        </div>
+        <ul class="nav navbar-nav pull-right">
+            {% if user|perm_may_create_application %}
+            <li >
+                <a href="{% url "oauth2:list" %}" >应用管理</a>
+            </li>
+            {% endif %}
+            <li >
+                <a href="{% url "account:auth_manager" %}" >授权管理</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li >
+                <a href="{% url "account:setting" "profile" %}" ><i class="glyphicon glyphicon-user"></i>{{ user }}</a>
+            </li>
+            <li >
+                <a href="{% url "account:signout" %}" ><i class="glyphicon glyphicon-off"></i></a>
+            </li>
+            {% else %}
+                <li >
+                    <a href="{% url "account:signin" %}" >登陆</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</header>
+{% block content %}
+{% endblock %}
+
+<footer class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="text-center">2015 &copy; 通用芯片与基础软件研究中心</div>
+        </div>
+    </div>
+</footer>
+
+{% compress js file %}
+{% block javascript %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}bower_components/jquery-cookie/jquery.cookie.js"></script>
+    <script src="{{ STATIC_URL }}bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}js/app.js"></script>
+{% endblock %}
+{% endcompress %}
+</body>
+</html>

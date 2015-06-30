@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% load pagination_tags %}
+{% block title %}授权管理{% endblock %}
+
+
+{% block javascript %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}bower_components/jquery-json/dist/jquery.json.min.js"></script>
+    <script src="{{ STATIC_URL }}bower_components/underscore/underscore-min.js"></script>
+    <script src="{{ STATIC_URL }}js/auth_manager.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">授权管理</h1>
+            <ul class="pull-right breadcrumb">
+                <li>
+                    <a href="/">主页</a>
+                </li>
+                <li class="active">授权管理
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="block">
+            <div class="block-title">
+                <h2>您用登陆过的应用有{{ accesstokens.count }}个</h2>
+            </div>
+            <div class="block-content">
+                <table class="table">
+                {% autopaginate accesstokens 10 %}
+                    {% for token in accesstokens %}
+                    <tr>
+                        <td class="col-xs-3"><img class="appIcon" src="{{ MEDIA_URL }}{{ token.application.icon }}" alt=""/></td>
+                        <td class="col-xs-5">
+                            <strong>{{ token.application.name }}</strong><br>
+                            {{ token.application.comm }}
+                        </td>
+                        <td class="col-xs-2 text-center">{{ token.created }}</td>
+                        <td class="col-xs-2 text-center">
+                            <button data-appname="{{ token.application.name }}" data-appid="{{ token.id }}"
+                                    class="btn btn-link" data-toggle="modal" data-target="#managerModal">授权管理</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% paginate %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="managerModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><span></span>-授权管理</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center loading"><img src="{{ STATIC_URL }}images/l1.gif"></div>
+                    <div class="auth-content">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link btn-sm removeAllAuth">取消全部授权</button>
+                    <button type="button" class="btn btn-primary btn-sm updateAuth">确认</button>
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="managerModal-template" type="text/template">
+        <div class="row">
+            <div class="col-xs-7">
+                <p>允许 <%=application.name%> 有以下权限</p>
+                <ul class="list-unstyled scopes">
+                    <% _.each(scopes_descriptions, function(scope){ %>
+                  <li><input name="scope" <%if(scope.selected){ %>checked<%}%> value="<%-scope.scope%>" type="checkbox"/><%-scope.description%></li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div class="col-xs-5">
+                <img class="appIcon" src="<%-application.icon%>">
+            </div>
+        </div>
+    </script>
+{% endblock %}
+

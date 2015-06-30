@@ -1,0 +1,54 @@
+{% extends "account/setting_security_layout.html" %}
+
+{% block tag-content %}
+    <div class="tab-content clearfix">
+        <div class="row">
+            <form method="POST" id="verifiedEmailForm" class="form-horizontal col-xs-9 col-xs-offset-1">
+                <div class="step1">
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="id_email"><i class="required">*</i> 当前邮箱:</label>
+                        <div class="col-xs-8">
+                        {{ user.email }}
+                        {% if not user.userprofile.verified_email %}
+                            (未验证)
+                            <button class="resend-a btn btn-link" data-loading-text="提交中..."
+                                    type="button">
+                                    重发验证邮件
+                            </button>
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4">安全问题:</label>
+                        <div class="col-xs-8">
+                            {{ user.userprofile.security_question }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="id_security_answer"><i class="required">*</i> 安全问题答案:</label>
+                        <div class="col-xs-8">
+                            <input class="form-control input-sm" id="id_security_answer" name="security_answer" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="id_new_email"><i class="required">*</i> 新的邮箱地址:</label>
+                        <div class="col-xs-8">
+                            <input class="form-control input-sm" id="id_new_email" name="email" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-8 col-xs-offset-4">
+                        <button type="submit" class="btn btn-primary btn-sm" data-loading-text="提交中..." >修改</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="step2 hide">
+                    <p>我们将会给您的邮箱地址发送一封验证邮件，请点击邮件中的激活链接即可完成验证如果没收到邮件，请确认是否填写正确的邮箱地址，或者在垃圾箱里检查一下</p>
+                    <button class="resend btn btn-link btn-sm" data-loading-text="提交中..." type="button"><span class="seconds">{{ seconds }}</span>秒后可重发</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

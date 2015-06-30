@@ -1,0 +1,32 @@
+server {
+        listen 443;
+        root __PATH__;
+
+        ssl on;
+        ssl_certificate /etc/nginx/ssl/cas-cert.pem;
+        ssl_certificate_key /etc/nginx/ssl/cas-key.key;
+        ssl_client_certificate /etc/nginx/ssl/cbs_ca_cert.crt;
+        ssl_session_timeout  5m;
+        location ~ ^(/static/) {
+                root __PATH__;
+                expires 7d;
+                access_log   off;
+        }
+        location ~ ^(/media/) {
+                root __PATH__;
+                access_log   off;
+        }
+
+        location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|mid|midi|wav|bmp|rtf|js|mov) {
+                access_log   off;
+        }
+
+
+        access_log /var/log/nginx/cas_access.log;
+        error_log /var/log/nginx/cas_error.log;
+        location / {
+                include uwsgi_params;
+                uwsgi_pass unix:///tmp/cas.socket;
+        }
+}
+

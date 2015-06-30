@@ -1,0 +1,33 @@
+body {
+  background-color: #f5f5f5;
+}
+.sponsorbox {
+  border-bottom: 1px solid #eee;
+}
+.sponsorbox h1 {
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  font-size: 60px
+}
+.sponsorbox p {
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+.l1 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  background-color: #fff;
+}
+.l1 h1 {
+  color: #555;
+  font-size: 24px;
+  font-weight: normal;
+}
+.l1 ul li h3 {
+  color: #333;
+  font-weight: 400;
+  margin-bottom: 5px;
+}

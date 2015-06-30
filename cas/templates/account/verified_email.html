@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" >常用邮箱</h4>
+</div>
+<div class="modal-body">
+    <form id="verifiedEmailForm">
+    <div class="step1 {% if seconds %} hide {% endif %}">
+
+        <div class="form-group">
+            <label class="control-label" for="id_security_answer">安全问题</label>
+            <p class="form-control-static">{{ user.userprofile.security_question }}</p>
+            <input class="form-control input-sm" id="id_security_answer" name="security_answer" type="text">
+        </div>
+        {% if profile.verified_email %}
+        <div class="form-group">
+            <label class="control-label" for="id_new_email">新的邮箱地址</label>
+            <input class="form-control input-sm" id="id_new_email" name="email" type="text">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-sm" >修改</button>
+        </div>
+        {% else %}
+        <div class="form-group">
+            <label class="control-label" for="id_email">当前邮箱</label>
+            <input class="form-control input-sm" id="id_email" value="{{ user.email }}" name="email" type="text">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-sm" data-loading-text="提交中..." >发送激活邮件</button>
+        </div>
+        {% endif %}
+    </div>
+    <div class="step2 {% if not seconds %} hide {% endif %}">
+        <p>我们将会给您的邮箱地址发送一封验证邮件，请点击邮件中的激活链接即可完成验证如果没收到邮件，请确认是否填写正确的邮箱地址，或者在垃圾箱里检查一下</p>
+        <button class="resend btn btn-link btn-sm" data-loading-text="提交中..." type="button"><span class="seconds">{{ seconds }}</span>秒后可重发</button>
+    </div>
+    </form>
+
+</div>

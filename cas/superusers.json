@@ -1,0 +1,70 @@
+[
+   {
+        "fields": {
+            "username": "casadmin",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2015-03-03T05:13:47.157Z",
+            "groups": [],
+            "user_permissions": [20, 29, 30],
+            "password": "pbkdf2_sha256$15000$DgQZeHBoDtwi$owKROer/OWnyCd3cbOpCU0r5CJy2GL3ITZVlXjDGAFw=",
+            "email": "zouyp_os@sari.ac.cn",
+            "date_joined": "2015-02-05T06:55:00Z"
+        },
+        "model": "auth.user",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "application_size": 10,
+            "certificate_serial": "1",
+            "locale": "C",
+            "passwordtoken_expires": null,
+            "creation": "2015-02-09T03:11:14.921Z",
+            "telephone": "",
+            "affiliation": "",
+            "security_question": "1+1",
+            "country_code": "",
+            "timezone": "UCT",
+            "status_change": "2015-02-09T03:10:00Z",
+            "verified_email": "2015-02-05T07:17:22.830Z",
+            "password_changed": "2015-02-09T03:10:00Z",
+            "blog_avatar": "",
+            "certificate": "",
+            "privacy": false,
+            "alias_enabled": true,
+            "comments": "",
+            "latitude": null,
+            "blog_rss": "",
+            "status": "active",
+            "gpg_keyid": "",
+            "internal_comments": "",
+            "postal_address": "",
+            "ssh_key": "",
+            "user": 1,
+            "passwordtoken": "",
+            "ircnick": "",
+            "emailtoken": "",
+            "longitude": null,
+            "certificate_password": "123456",
+            "security_answer": "2",
+            "facsimile": "",
+            "human_name": "zouyapeng",
+            "old_password": "",
+            "last_seen": "2015-02-09T03:10:00Z"
+        },
+        "model": "account.userprofile",
+        "pk": 8
+    },
+    {
+	"fields": {
+	    "name": "cas",
+            "permissions": []
+	},
+	"model": "auth.group",
+	"pk": 1
+    }
+]

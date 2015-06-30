@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{% load i18n %}
+{% load url from future %}
+
+
+
+{% block javascript %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="{{ STATIC_URL }}js/validate-methods.js"></script>
+    <script src="{{ STATIC_URL }}js/application.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">
+                {% block app-form-title %}
+                    {{ application.name }}
+                {% endblock app-form-title %}
+            </h1>
+            <ul class="pull-right breadcrumb">
+                <li>
+                    <a href="/">主页</a>
+                </li>
+                <li>
+                    <a href="{% url "oauth2:list" %}" >应用管理</a>
+                </li>
+                {% if application %}
+                    <li class="active">
+                        {{ application.name }}
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="block clearfix">
+            <form class="form-horizontal col-xs-8 col-xs-offset-1" id="application_form" enctype="multipart/form-data" method="post" action="{% block app-form-action-url %}{% url 'oauth2:update' application.id %}{% endblock app-form-action-url %}">
+            {% csrf_token %}
+
+            <div class="form-group {% if form.name.errors %}has-error{% endif %}">
+                <label class="col-xs-2 control-label" for="id_name"><i class="required">*</i> 应用名词:</label>
+                <div class="col-xs-6">
+                    <input id="id_name" maxlength="255" name="name" type="text" value="{{ form.name.value|default:"" }}" class="form-control">
+                    {% for error in form.name.errors %}
+                        <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="col-xs-4 help-block">
+                    长度不能超过20个字符
+                </div>
+            </div>
+            <div class="form-group {% if form.redirect_uris.errors %}has-error{% endif %}">
+                <label class="col-xs-2 control-label" for="id_redirect_uris"><i class="required">*</i> 回调地址:</label>
+                <div class="col-xs-6">
+                    <textarea id="id_redirect_uris" maxlength="255" name="redirect_uris" class="form-control">{{ form.redirect_uris.value|default:"" }}</textarea>
+                    {% for error in form.redirect_uris.errors %}
+                        <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="col-xs-4 help-block">
+                    可填写多个根域名，以空格分隔
+                </div>
+
+            </div>
+            <div class="form-group {% if form.icon.errors %}has-error{% endif %}">
+                <label class="col-xs-2 control-label" for="id_icon">应用小图标:</label>
+                <div class="col-xs-6">
+                    {% if form.icon.value %}
+                        <img class="appIcon" src="{{ MEDIA_URL }}{{ form.icon.value }}" alt=""/>
+                    {% endif %}
+                    <span class="fileinput-button btn btn-xs btn-default">
+                        <span>上传附件</span>
+                        <input class="upload-attach" id="id_icon" maxlength="255" name="icon" type="file"
+                           onchange="$('.upload-url').html($(this).val());" />
+                    </span>
+                    <span class="upload-url"></span>
+                    {% for error in form.icon.errors %}
+                        <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form-group {% if form.comm.errors %}has-error{% endif %}">
+                <label class="col-xs-2 control-label" for="id_comm"><i class="required">*</i> 简介:</label>
+                <div class="col-xs-6">
+                    <textarea id="id_comm" maxlength="255" name="comm" class="form-control">{{ form.comm.value|default:"" }}</textarea>
+                    {% for error in form.comm.errors %}
+                        <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="col-xs-4 help-block">
+                    不超过400字数
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="col-xs-6 col-xs-offset-2">
+                    <a class="btn btn-link btn-sm" href="{% block app-form-back-url %}{% url "oauth2:detail" application.id %}{% endblock app-form-back-url %}">
+                        返回
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+{% endblock %}
+

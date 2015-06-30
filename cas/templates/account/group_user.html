@@ -1,0 +1,97 @@
+{% extends "account/setting_layout.html" %}
+{% load pagination_tags %}
+{% load usertags %}
+{% block right-content %}
+    <div class="group_users">
+        <div class="row">
+            <h4 class="col-xs-6">{{ group }}组</h4>
+
+            <div class="col-xs-6">
+                <form class="input-group-filter form-horizontal">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default show-filter-more"
+                                    aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                        </div>
+                        <input class="form-control" value="{{ request.GET.kw|default:'' }}" name="kw" type="text">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </div>
+                    </div>
+                    <div class="filter-more">
+                      <div class="form-group">
+                        <label for="id_user_type" class="col-sm-2 control-label">类型</label>
+                        <div class="col-sm-10">
+                          <select id="id_user_type" name="user_type" class="form-control input-sm">
+                                <option {% ifequal request.GET.user_type '' %}selected {% endifequal %} value="">全部</option>
+                                <option {% ifequal request.GET.user_type 'administrator' %}selected {% endifequal %} value="administrator">管理员</option>
+                                <option {% ifequal request.GET.user_type 'user' %}selected {% endifequal %} value="user">用户</option>
+                            </select>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>用户</th>
+                <th class="col-xs-3">申请时间</th>
+                <th class="col-xs-3">验证日期</th>
+                <th class="col-xs-2">角色类型</th>
+                <th class="col-xs-3"></th>
+            </tr>
+            {% autopaginate user_set 10 %}
+            {% for user in user_set %}
+                {% user_group user group ug %}
+                    <tr>
+                        <td>{{ user }}</td>
+                        <td>{{ ug.creation }}</td>
+                        <td>{{ ug.is_active|user_tz:user|default:"未验证" }}</td>
+                        <td>
+                            {{ ug.get_user_type_display }}
+                        </td>
+                        <td>
+                            {% if request.user|perm_may_del_user_group:ug %}
+                                    <button type="button"
+                                data-loading-text="提交中..."
+                                data-ug-id="{{ ug.id }}"
+                                data-method="DELETE"
+                                class="btn btn-primary btn-xs edit">删除</button>
+                            {% endif %}
+                            {% if ug.is_active %}
+
+                            {% if request.user|perm_may_admin_user_group:ug %}
+                                {% user_group user group ug %}
+                                    <button type="button"
+                                data-loading-text="提交中..."
+                                data-ug-id="{{ ug.id }}"
+                                data-method="PUT"
+                                class="btn btn-primary btn-xs edit">设为管理员</button>
+                                {% enduser_group %}
+                            {% endif %}
+                            {% else %}
+                                {% if request.user|perm_may_audit_user_group:ug %}
+                                        <button type="button"
+                                    data-loading-text="提交中..."
+                                    data-ug-id="{{ ug.id }}"
+                                    data-method="POST"
+                                    class="btn btn-primary btn-xs edit">通过</button>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% enduser_group %}
+            {% endfor %}
+        </table>
+        <div class="row">
+            <div class="col-xs-4">
+                <p class="form-control-static input-sm">{% pagination_results %}</p></div>
+{#            <div class="col-xs-8 text-right">{% paginate %}</div>#}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %}用户注册{% endblock title %}
+{% load i18n %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="{{ STATIC_URL }}js/validate-methods.js"></script>
+    <script src="{{ STATIC_URL }}js/signup.js"></script>
+{% endblock %}
+{% block content %}
+    <div id="signup" class="register-box row">
+        <h2 class="margin-bottom-20 text-center">注册新用户</h2>
+        <div class="col-xs-8 col-xs-offset-2">
+            <form id="signupForm" class="form-horizontal" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                        <label class="control-label col-xs-3" for="{{ field.id_for_label }}"><i class="required">*</i> {{ field.label }}</label>
+                        <div class="col-xs-9">
+                            {% ifequal field.name "captcha" %}
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        {{ field }}
+                                        <div id="{{ field.id_for_label }}-error" class="error help-block">
+                                            {% for error in field.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <img title="点击刷新" class="captcha-img" src="{% url "home:captcha" %}">
+                                    </div>
+                                </div>
+                            {% else %}
+                                {{ field }}
+                                <div id="{{ field.id_for_label }}-error" class="error help-block">
+                                    {% for error in field.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endifequal %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <div class="col-xs-9 col-xs-offset-3">
+                        {% if request.GET.next %}
+                        <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+                        {% endif %}
+                        <button type="submit" class="btn btn-sm btn-primary btn-block">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

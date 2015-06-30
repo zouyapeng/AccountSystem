@@ -1,0 +1,76 @@
+{% extends "account/setting_layout.html" %}
+{% load usertags %}
+
+
+{% block right-content %}
+<form id="profileForm" method="POST" class="form-horizontal col-xs-9 col-xs-offset-1">
+    <div class="form-group">
+        <label class="col-xs-4 control-label">账号:</label>
+
+        <div class="col-xs-8">
+            <p class="form-control-static">{{ user.username }}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">常用邮箱:</label>
+        <div class="col-xs-8">
+            <p class="form-control-static">{{ user.email }}
+                <a href="{% url "account:security" "email" %}">
+                    {% if not profile.verified_email %}
+                    未验证
+                    {% else %}
+                    修改
+                    {% endif %}
+                </a>
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">手机号码:</label>
+
+        <div class="col-xs-8">
+            <input value="{{ profile.telephone|default:'' }}" name="telephone" type="text"
+                       class="form-control input-sm"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">邮政地址:</label>
+
+        <div class="col-xs-8">
+            <input value="{{ profile.postal_address|default:'' }}" name="postal_address" type="text"
+                       class="form-control input-sm"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">传真:</label>
+        <div class="col-xs-8">
+            <input value="{{ profile.facsimile|default:'' }}" name="facsimile" type="text"
+                       class="form-control input-sm"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-4 control-label">时区:</label>
+        <div class="col-xs-8">
+            <select name="timezone" class="form-control input-sm">
+                {% for u in all_timezones %}
+                <option {% ifequal profile.timezone u %} selected{% endifequal %}>{{ u }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-8 col-xs-offset-3">
+            <button class="btn btn-sm btn-primary" data-loading-text="提交中..."  type="submit">保存</button>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="settingModal" >
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            222
+        </div>
+    </div>
+</div>
+{% endblock %}

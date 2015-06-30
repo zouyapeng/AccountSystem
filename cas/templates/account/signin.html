@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block title %}用户登录{% endblock title %}
+{% load i18n %}
+
+{% block content %}
+    <div id="signin" class="register-box row">
+        <div class="block-center">
+            <div class="col-xs-6 col-xs-offset-3">
+            {% if error %}
+            <div class="alert alert-warning" role="alert">{{ error }}</div>
+            {% endif %}
+                 <form class="form-horizontal"  method="post">
+                    {% csrf_token %}
+                 <div class="form-group ">
+                    <label for="id_username" class="control-label col-xs-3"><i class="required">*</i> 用户名</label>
+
+                    <div class="col-xs-9">
+                        <input type="text" value="{{ request.POST.username|default:'' }}" name="username" id="id_username" class=" form-control input-sm">
+
+                    </div>
+                </div>
+                 <div class="form-group ">
+                    <label for="id_password" class="control-label col-xs-3"><i class="required">*</i> 密码</label>
+
+                    <div class="col-xs-9">
+                        <input type="password" name="password" id="id_password" class=" form-control input-sm">
+
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            <div class="row">
+                                <div class="col-xs-6 checkbox">
+                                    <label><input name="remember_me" value="1" type="checkbox"/>记住我</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button type="submit" class="btn btn-sm btn-primary btn-block">登录</button>
+                                    {% if request.GET.next %}
+                                    <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-left">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            还没有账号?<a href="{% url 'account:signup' %}{% if signin_next %}?next={{ signin_next }}{% endif %}">注册</a>   <a href="{% url 'account:forget' '' %}">找回密码</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

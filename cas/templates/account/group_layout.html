@@ -1,0 +1,15 @@
+{% extends "account/setting_layout.html" %}
+
+{% block right-content %}
+<ul class="nav nav-tabs nav-justified margin-bottom-20 tab-v1">
+    <li {% if not PATH_INFO.2 %} class="active" {% endif %}>
+        <a href="{% url "account:group" %}">我的组</a>
+    </li>
+    <li {% ifequal PATH_INFO.2 "add" %} class="active" {% endifequal %}>
+        <a href="{% url "account:add_group" %}">加入组</a>
+    </li>
+</ul>
+
+{% block tag-content %}
+{% endblock %}
+{% endblock %}

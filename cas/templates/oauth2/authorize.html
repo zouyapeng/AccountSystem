@@ -1,0 +1,41 @@
+{% extends "oauth2/base.html" %}
+
+{% load i18n %}
+{% block content %}
+    <div id="signin" class="register-box row">
+            <div class="col-xs-8 col-xs-offset-2">
+        {% if not error %}
+            <form id="authorizationForm" method="post">
+                <h3 class="block-center-heading">{{ application.name }} 将获得以下权限</h3>
+                {% csrf_token %}
+
+                {% for field in form %}
+                    {% if field.is_hidden %}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
+                <ol>
+                    {% for scope in scopes_descriptions %}
+                        <li>{{ scope }}</li>
+                    {% endfor %}
+                </ol>
+
+                {{ form.errors }}
+                {{ form.non_field_errors }}
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="submit" class="btn btn-sm btn-default" value="取消"/>
+                        <input type="submit" class="btn btn-sm btn-primary" name="allow" value="授权"/>
+                        <a class="btn btn-sm btn-default pull-right" href="{% url 'account:signout' %}?{{ next }}">切换用户</a>
+                    </div>
+                </div>
+            </form>
+        {% else %}
+            <h2>访问出错了！</h2>
+            <p>你所访问的站点认证失败。</p>
+            <h6>(Error: {{ error.error }})</h6>
+            <p>{{ error.description }}</p>
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}

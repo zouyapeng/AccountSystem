@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}用户设置{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+        <link href="{{ STATIC_URL }}css/setting.css" rel="stylesheet">
+{% endblock %}
+{% block javascript %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}bower_components/jquery-json/dist/jquery.json.min.js"></script>
+    <script src="{{ STATIC_URL }}bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="{{ STATIC_URL }}js/validate-methods.js"></script>
+    <script src="{{ STATIC_URL }}js/setting.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="breadcrumbs margin-bottom-10">
+        <div class="container">
+            <h1 class="pull-left">用户设置</h1>
+            <ul class="pull-right breadcrumb">
+                <li>
+                    <a href="/">主页</a>
+                </li>
+                <li class="active">用户设置
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+    <div class="col-xs-3 ">
+        <ul class="list-group sidebar-nav">
+            <li class="list-group-item {% ifequal tab "profile" %} active {% endifequal %}" ><a href="{% url "account:setting" "profile" %}"><i class="glyphicon glyphicon-cog"></i> 基本信息</a></li>
+            <li class="list-group-item {% ifequal tab1 "security" %} active {% endifequal %}" ><a href="{% url "account:security" "pwd" %}"><i class="glyphicon glyphicon-lock"></i> 安全设置</a></li>
+            <li class="list-group-item {% ifequal tab "certificate" %} active {% endifequal %}" ><a href="{% url "account:setting" "certificate" %}"><i class="fa fa-certificate"></i> 证书下载</a></li>
+            <li class="list-group-item {% ifequal tab "group" %} active {% endifequal %}" ><a href="{% url "account:group" %}"><i class="fa fa-users"></i> 用户组</a></li>
+        </ul>
+    </div>
+    <div class="col-xs-9 profile-body">
+        {% block right-content %}
+        {% endblock %}
+    </div>
+    </div>
+{% endblock %}

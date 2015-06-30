@@ -1,0 +1,60 @@
+{% extends "account/group_layout.html" %}
+{% load pagination_tags %}
+{% load usertags %}
+{% block tag-content %}
+    {% autopaginate groups 10 %}
+    <div class="group-list">
+        <div class="row margin-bottom-20">
+            <div class="col-xs-7 text-right">
+
+            </div>
+        <div class="col-xs-5">
+            <form action="">
+                <div class="input-group input-group-sm">
+                  <input value="{{ request.GET.kw|default:'' }}" type="text" name="kw" class="form-control" >
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">搜索</button>
+                  </span>
+                </div>
+            </form>
+        </div>
+        </div>
+        <table class="table table-bordered table-striped table-condensed">
+            <tr>
+                <th class="col-xs-3">组</th>
+                <th>描述</th>
+                <th class="col-xs-2 text-center">状态</th>
+            </tr>
+            {% for group in groups %}
+            <tr>
+                <td><a href="{% url "account:group_detail" group.name %}">{{ group.name }}</a></td>
+                <td>{{ group.groupprofile.describe }}</td>
+                <td class="text-center">
+                    {% user_group user group ug %}
+                        {% if ug %}
+                            {% if ug.is_active %}
+                                 已验证
+                            {% else %}
+                                 等待验证
+                            {% endif %}
+                        {% else %}
+                            {% if group.groupprofile.apply %}
+                            <button type="button"
+                            data-loading-text="提交中..."
+                            data-group-id="{{ group.id }}"
+                            class="btn btn-xs btn-primary applications">申请</button>
+                            {% endif %}
+                        {% endif %}
+                    {% enduser_group %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    <div class="row">
+        <div class="col-xs-4">
+            <p class="form-control-static input-sm">{% pagination_results %}</p></div>
+        <div class="col-xs-8 text-right">{% paginate %}</div>
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}CAS(CAS Account System){% endblock title %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}css/home.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <section class="sponsorbox">
+        <div class="container">
+            <h1>CAS</h1>
+            <p>111111</p>
+        </div>
+
+    </section>
+    <section class="l1">
+        <div class="container">
+        <h1>
+            文档资源
+        </h1>
+        <ul class="list-unstyled">
+            <li class="col-sm-4">
+                <h4><a href="http://10.3.3.42/wiki/index.php/CAS%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C">用户手册</a></h4>
+                <p>用户手册</p>
+            </li>
+            <li class="col-sm-4">
+                <h4><a href="http://10.3.3.42/wiki/index.php/OAuth2.0%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3">OAuth2.0开发文档</a></h4>
+                <p>OAuth2.0授权方式</p>
+            </li>
+        </ul>
+        </div>
+    </section>
+    <section class="l1">
+        <div class="container">
+        <h1>
+            项目
+        </h1>
+        <ul class="list-unstyled">
+            <li class="col-sm-4">
+                <h4><a href="">cbs</a></h4>
+                <p>cbs</p>
+            </li>
+            <li class="col-sm-4">
+                <h4><a href="">bodhi</a></h4>
+                <p>bodhi</p>
+            </li>
+        </ul>
+        </div>
+    </section>
+{% endblock %}
